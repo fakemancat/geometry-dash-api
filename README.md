@@ -1,2 +1,2 @@
 # geometry-dash-api
-NPM module for working with Geometry Dash API
+# NPM module for working with Geometry Dash API
