@@ -64,7 +64,7 @@ api.friends.addRequest({ params }); // => If successful: Promise<Boolean>
 ```
 |Param|Type|Description|
 |-|-|-|
-|accountID|Number|Add player ID|
+|toAccountID|Number|Player's ID|
 |message|String|Message when adding|
 ### Levels
 For information of level on ID:
