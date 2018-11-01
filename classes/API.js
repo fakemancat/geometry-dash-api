@@ -12,7 +12,6 @@ const Users = function (options) {
             if (!this.options.accountID) {
                 error('You need to log in to your account');
             }
-
             let account = await request(`${this.options.server}/getGJUserInfo20.php`, {
                 method: 'POST',
                 form: {
@@ -78,10 +77,17 @@ const Users = function (options) {
 const Friends = function (options) {
     return {
         options,
-        addRequest: async function (toAccountID, message) {
+        addRequest: async function (params = {}) {
             if (!this.options.accountID) {
                 error('You need to log in to your account');
             }
+            if (!params.toAccountID) {
+                error('Parameter toAccountID is required');
+            }
+            if (!params.message) {
+                error('Parameter message is required');
+            }
+
             try {
                 const result = await request(`${this.options.server}/uploadFriendRequest20.php`, {
                     method: 'POST',
@@ -91,8 +97,8 @@ const Friends = function (options) {
                         gdw: '0',
                         accountID: this.options.accountID,
                         gjp: this.options.gjp,
-                        toAccountID,
-                        comment: xor.b64to(message),
+                        toAccountID: params.toAccountID,
+                        comment: xor.b64to(params.message),
                         secret: 'Wmfd2893gb7'
                     }
                 });
@@ -113,16 +119,14 @@ const Friends = function (options) {
 const Levels = function (options) {
     return {
         options,
-        getById: async function (options) {
-            if (!options.levelID) error('Option levelID is required');
-
+        getById: async function (levelID) {
             let level = await request(`${this.options.server}/downloadGJLevel22.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
                     binaryVersion: '35',
                     gdw: '0',
-                    levelID: options.levelID,
+                    levelID: levelID,
                     inc: '0',
                     extras: '0',
                     secret: 'Wmfd2893gb7'
@@ -187,11 +191,11 @@ const Levels = function (options) {
                 isLDM: +result[40] == 1 ? true : false,
                 password
             };
-            
+
             if (options.levelString) {
                 answer['levelString'] = result[4];
             }
-            
+
             return answer;
         }
     };
@@ -204,14 +208,14 @@ const Tops = function (options) {
             const result = await request(`${this.options.server}/getGJScores20.php`, {
                 method: 'POST',
                 form: {
-                    "gameVersion": 21,
-                    "binaryVersion": 35,
-                    "gdw": 0,
-                    "accountID": this.options.accountID,
-                    "gjp": this.options.gjp,
+                    gameVersion: "21",
+                    binaryVersion: "35",
+                    gdw: "0",
+                    accountID: this.options.accountID,
+                    gjp: this.options.gjp,
                     type,
-                    "count": 100,
-                    "secret": "Wmfd2893gb7"
+                    count: "100",
+                    secret: "Wmfd2893gb7"
                 }
             });
 
@@ -227,7 +231,7 @@ const Tops = function (options) {
                 user = splitRes(user);
 
                 top.push({
-                    rang: user[6],
+                    rang: +user[6],
                     nick: user[1],
                     userID: user[2],
                     accountID: user[16],
