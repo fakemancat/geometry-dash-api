@@ -55,7 +55,7 @@ For information on user nick:
 api.users.getByNick({ params }); // => Promise<Object>
 ```
 |Param|Type|Description|
-|--------|-------|
+|-|-|-|
 |nick|String|The nickname of the user|
 ## Friends
 To send requests to your friends in someone's ID:
