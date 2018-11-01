@@ -71,8 +71,14 @@ const Users = function (options) {
             return this.getUserById(
                 accountID
             );
-        },
-        addFriend: async function (toAccountID, message) {
+        }
+    };
+};
+
+const Friends = function (options) {
+    return {
+        options,
+        addRequest: async function (toAccountID, message) {
             if (!this.options.accountID) {
                 error('You need to log in to your account');
             }
@@ -107,14 +113,16 @@ const Users = function (options) {
 const Levels = function (options) {
     return {
         options,
-        getById: async function (ID) {
+        getById: async function (options) {
+            if (!options.levelID) error('Option levelID is required');
+
             let level = await request(`${this.options.server}/downloadGJLevel22.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
                     binaryVersion: '35',
                     gdw: '0',
-                    levelID: ID,
+                    levelID: options.levelID,
                     inc: '0',
                     extras: '0',
                     secret: 'Wmfd2893gb7'
@@ -139,12 +147,12 @@ const Levels = function (options) {
             diff = starAuto == '1' ? 'Auto' : starDemon == '1' ? 'Demon' : 'Insane';
 
             const length = [
-            'tiny',
-            'short',
-            'medium',
-            'long',
-            'XL'
-        ][result[15]];
+                'tiny',
+                'short',
+                'medium',
+                'long',
+                'XL'
+            ][result[15]];
 
             let password = +xor.cipher((Buffer.from(result[27], 'base64').toString()), 26364);
             password = String(password).split('');
@@ -156,7 +164,7 @@ const Levels = function (options) {
                 password = Number(password.join(''));
             }
 
-            return {
+            let answer = {
                 levelID: +result[1],
                 name: result[2],
                 desc: result[3],
@@ -179,6 +187,54 @@ const Levels = function (options) {
                 isLDM: +result[40] == 1 ? true : false,
                 password
             };
+            
+            if (options.levelString) {
+                answer['levelString'] = result[4];
+            }
+            
+            return answer;
+        }
+    };
+};
+
+const Tops = function (options) {
+    return {
+        options,
+        get: async function (type) {
+            const result = await request(`${this.options.server}/getGJScores20.php`, {
+                method: 'POST',
+                form: {
+                    "gameVersion": 21,
+                    "binaryVersion": 35,
+                    "gdw": 0,
+                    "accountID": this.options.accountID,
+                    "gjp": this.options.gjp,
+                    type,
+                    "count": 100,
+                    "secret": "Wmfd2893gb7"
+                }
+            });
+
+            if (result == '-1') {
+                error('Top type not specified correctly');
+            }
+
+            const users = result.split('|');
+
+            let top = [];
+
+            for (let user of users) {
+                user = splitRes(user);
+
+                top.push({
+                    rang: user[6],
+                    nick: user[1],
+                    userID: user[2],
+                    accountID: user[16],
+                });
+            }
+
+            return top;
         }
     };
 };
@@ -188,11 +244,13 @@ module.exports = class API {
     constructor(options = {}) {
         this.options = options;
 
+        this.tops = Tops(this.options);
         this.users = Users(this.options);
         this.levels = Levels(this.options);
+        this.friends = Friends(this.options);
     }
-    // Option AccountID
 
+    // Logon
     async login() {
         const result = await request(`${this.options.server}/accounts/loginGJAccount.php`, {
             method: 'POST',
