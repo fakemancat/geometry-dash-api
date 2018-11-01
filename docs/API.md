@@ -14,7 +14,7 @@ To start before using the API you need to log in:
 ```
 or
 ```js
-api.login().then(() => {
+api.login().then(async() => {
   const user = await api.users.getById(71);
   console.log(user); // => object
 });
