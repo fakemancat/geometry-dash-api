@@ -85,7 +85,7 @@ api.tops.get({ params }); // => Promise<Array>
 |type|String|Top type|
 |count|Number|Count of users|
 </br>
-Possible top types:
+Possible top types:</br>
 * top
 * friends
 * relative
