@@ -30,7 +30,6 @@ For each asynchronous function, you need to login:
 // ...
 ```
 # API methods
-Available method:</br>
 ## Users
 For information on user ID:
 ```js
