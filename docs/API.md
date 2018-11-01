@@ -27,8 +27,19 @@ For each asynchronous function, you need to login:
 ```
 # API methods
 ## Users
-All methods are associated with working with the user</br></br>
-Available method:
+Available method:</br>
 
-```api.users.getById(/* AccountID */) // => object```
-```api.users.getByNick(/* AccountID */) // => object```
+For information on user ID:
+```js
+api.users.getById(accountID) // => object
+```
+
+For information on user nick:
+```js
+api.users.getByNick(accountID) // => object
+```
+
+To send requests to your friends in someone's ID:
+```js
+api.users.addFriendRequest(accountID, message) // => If successful: true
+```
