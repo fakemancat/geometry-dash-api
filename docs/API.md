@@ -30,9 +30,8 @@ For each asynchronous function, you need to login:
 // ...
 ```
 # API methods
-## Users
 Available method:</br>
-
+## Users
 For information on user ID:
 ```js
 api.users.getById(accountID); // => object
@@ -42,14 +41,12 @@ For information on user nick:
 ```js
 api.users.getByNick(accountID); // => object
 ```
-
+## Friends
 To send requests to your friends in someone's ID:
 ```js
-api.users.addFriendRequest(accountID, message); // => If successful: true
+api.friends.addRequest(accountID, message); // => If successful: true
 ```
 ## Levels
-Available method:</br>
-
 For information of level on ID:
 ```js
 api.levels.getById(levelID); // => object
