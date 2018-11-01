@@ -50,3 +50,13 @@ For information of level on ID:
 ```js
 api.levels.getById(levelID); // => object
 ```
+## Tops
+To obtain the top type:
+```js
+api.tops.get(type) // => array of user objects
+```
+Possible top types:
+* top
+* friends
+* relative
+* creators
