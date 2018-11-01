@@ -44,7 +44,8 @@ For each asynchronous function, you need to login:
 ### Users
 For information on user ID:
 ```js
-api.users.getById(ID); // => Promise<Object>
+const user = await api.users.getById(ID);
+console.log(user); // => object
 ```
 |Param |Type|Description|
 |-|-|-|
@@ -52,7 +53,8 @@ api.users.getById(ID); // => Promise<Object>
 # 
 For information on user nick:
 ```js
-api.users.getByNick(nick); // => Promise<Object>
+const user = await api.users.getByNick(nick);
+console.log(user); // => object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -60,7 +62,7 @@ api.users.getByNick(nick); // => Promise<Object>
 ### Friends
 To send requests to your friends in someone's ID:
 ```js
-api.friends.addRequest({ params }); // => If successful: Promise<Boolean>
+await api.friends.addRequest({ params }); // => If successful: true
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -69,7 +71,8 @@ api.friends.addRequest({ params }); // => If successful: Promise<Boolean>
 ### Levels
 For information of level on ID:
 ```js
-api.levels.getById({ params }); // => Promise<Object>
+const level = await api.levels.getById({ params });
+console.log(level); // => object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -78,7 +81,8 @@ api.levels.getById({ params }); // => Promise<Object>
 ### Tops
 To obtain the top type:
 ```js
-api.tops.get({ params }); // => Promise<Array>
+const users = await api.tops.get({ params });
+console.log(users); // => array of objects
 ```
 |Param|Type|Description|
 |-|-|-|
