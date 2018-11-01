@@ -44,15 +44,15 @@ For each asynchronous function, you need to login:
 ### Users
 For information on user ID:
 ```js
-api.users.getById({ params }); // => Promise<Object>
+api.users.getById(ID); // => Promise<Object>
 ```
 |Param |Type|Description|
 |-|-|-|
-|accountID|Number|user account ID|
+|ID|Number|user account ID|
 # 
 For information on user nick:
 ```js
-api.users.getByNick({ params }); // => Promise<Object>
+api.users.getByNick(nick); // => Promise<Object>
 ```
 |Param|Type|Description|
 |-|-|-|
