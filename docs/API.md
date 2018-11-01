@@ -48,7 +48,12 @@ api.friends.addRequest(accountID, message); // => If successful: true
 ## Levels
 For information of level on ID:
 ```js
-api.levels.getById(levelID); // => object
+api.levels.getById({ params }); // => object
+```
+Possible params:
+```js
+levelString // Boolean
+levelID // Number
 ```
 ## Tops
 To obtain the top type:
