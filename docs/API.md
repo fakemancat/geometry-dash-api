@@ -31,15 +31,22 @@ Available method:</br>
 
 For information on user ID:
 ```js
-api.users.getById(accountID) // => object
+api.users.getById(accountID); // => object
 ```
 
 For information on user nick:
 ```js
-api.users.getByNick(accountID) // => object
+api.users.getByNick(accountID); // => object
 ```
 
 To send requests to your friends in someone's ID:
 ```js
-api.users.addFriendRequest(accountID, message) // => If successful: true
+api.users.addFriendRequest(accountID, message); // => If successful: true
+```
+## Levels
+Available method:</br>
+
+For information of level on ID:
+```js
+api.levels.getById(levelID); // => object
 ```
