@@ -58,7 +58,12 @@ levelID // Number
 ## Tops
 To obtain the top type:
 ```js
-api.tops.get(type) // => Promise<Array>
+api.tops.get({ params }) // => Promise<Array>
+```
+Possible params:
+```js
+type // String
+count // Number
 ```
 Possible top types:
 * top
