@@ -8,14 +8,18 @@ To start before using the API you need to log in:
 (async() => {
   await api.login();
   
-  const user = await api.users.getById(71);
+  const user = await api.users.getById({
+    accountID: 71
+  });
   console.log(user); // => object
 })()
 ```
 or
 ```js
 api.login().then(async() => {
-  const user = await api.users.getById(71);
+  const user = await api.users.getById({
+    accountID: 71
+  });
   console.log(user); // => object
 });
 ```
@@ -40,17 +44,19 @@ For each asynchronous function, you need to login:
 ## Users
 For information on user ID:
 ```js
-api.users.getById(accountID); // => Promise<Object>
+api.users.getById({ params }); // => Promise<Object>
 ```
-
+|Param    |Type  |Description    |
+|---------|------|---------------|
+|accountID|Number|user account ID|
 For information on user nick:
 ```js
-api.users.getByNick(accountID); // => Promise<Object>
+api.users.getByNick({ params }); // => Promise<Object>
 ```
 ## Friends
 To send requests to your friends in someone's ID:
 ```js
-api.friends.addRequest(accountID, message); // => If successful: Promise<Boolean>
+api.friends.addRequest({ params }); // => If successful: Promise<Boolean>
 ```
 ## Levels
 For information of level on ID:
