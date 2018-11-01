@@ -29,7 +29,7 @@ For each asynchronous function, you need to login:
 
 // ...
 ```
-# API methods
+<h1>API methods</h1>
 ## Users
 For information on user ID:
 ```js
