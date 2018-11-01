@@ -38,22 +38,22 @@ For each asynchronous function, you need to login:
 ```
 # API methods
 ## Users
-> For information on user ID:
+For information on user ID:
 ```js
 api.users.getById(accountID); // => Promise<Object>
 ```
 
-> For information on user nick:
+For information on user nick:
 ```js
 api.users.getByNick(accountID); // => Promise<Object>
 ```
 ## Friends
-> To send requests to your friends in someone's ID:
+To send requests to your friends in someone's ID:
 ```js
 api.friends.addRequest(accountID, message); // => If successful: Promise<Boolean>
 ```
 ## Levels
-> For information of level on ID:
+For information of level on ID:
 ```js
 api.levels.getById({ params }); // => Promise<Object>
 ```
@@ -63,7 +63,7 @@ levelString // Boolean
 levelID // Number
 ```
 ## Tops
-> To obtain the top type:
+To obtain the top type:
 ```js
 api.tops.get({ params }) // => Promise<Array>
 ```
