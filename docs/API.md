@@ -25,3 +25,10 @@ For each asynchronous function, you need to login:
 
 // ...
 ```
+# API methods
+## Users
+All methods are associated with working with the user</br></br>
+Available method:
+
+```api.users.getById(/* AccountID */) // => object```
+```api.users.getByNick(/* AccountID */) // => object```
