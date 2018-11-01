@@ -1,4 +1,8 @@
 # Using the server API
+Get API methods:
+```js
+const { api } = Server;
+```
 To start before using the API you need to log in:
 ```js
 (async() => {
