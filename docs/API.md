@@ -46,8 +46,8 @@ For information on user ID:
 ```js
 api.users.getById({ params }); // => Promise<Object>
 ```
-|Param |Type|Description|
-|--------|-------|
+|Param    |Type  |Description    |
+|---------|------|---------------|
 |accountID|Number|user account ID|
 # 
 For information on user nick:
