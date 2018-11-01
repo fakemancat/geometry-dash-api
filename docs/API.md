@@ -40,45 +40,50 @@ For each asynchronous function, you need to login:
 
 // ...
 ```
-# API methods
-## Users
+## API methods
+### Users
 For information on user ID:
 ```js
 api.users.getById({ params }); // => Promise<Object>
 ```
-|Param    |Type  |Description    |
-|---------|------|---------------|
-|accountID|Number|user account ID|
-#
+|Param |Type|Description
+|-
+|accountID|Number|user account ID
+# 
 For information on user nick:
 ```js
 api.users.getByNick({ params }); // => Promise<Object>
 ```
+|Param|Type|Description
+|-
+|nick|String|The nickname of the user
 ## Friends
 To send requests to your friends in someone's ID:
 ```js
 api.friends.addRequest({ params }); // => If successful: Promise<Boolean>
 ```
+|Param|Type|Description
+|-
+|accountID|Number|Add player ID
+|message|String|Message when adding
 ## Levels
 For information of level on ID:
 ```js
 api.levels.getById({ params }); // => Promise<Object>
 ```
-Possible params:
-```js
-levelString // Boolean
-levelID // Number
-```
+|Param|Type|Description
+|-
+|levelID|Number|Level ID
+|levelString|Boolean|Return level String or not
 ## Tops
 To obtain the top type:
 ```js
-api.tops.get({ params }) // => Promise<Array>
+api.tops.get({ params }); // => Promise<Array>
 ```
-Possible params:
-```js
-type // String
-count // Number
-```
+|Param|Type|Description
+|-
+|type|String|Top type
+|count|Number|Count of users
 Possible top types:
 * top
 * friends
