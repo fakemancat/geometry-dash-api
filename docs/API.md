@@ -33,22 +33,22 @@ For each asynchronous function, you need to login:
 ## Users
 For information on user ID:
 ```js
-api.users.getById(accountID); // => object
+api.users.getById(accountID); // => Promise<Object>
 ```
 
 For information on user nick:
 ```js
-api.users.getByNick(accountID); // => object
+api.users.getByNick(accountID); // => Promise<Object>
 ```
 ## Friends
 To send requests to your friends in someone's ID:
 ```js
-api.friends.addRequest(accountID, message); // => If successful: true
+api.friends.addRequest(accountID, message); // => If successful: Promise<Boolean>
 ```
 ## Levels
 For information of level on ID:
 ```js
-api.levels.getById({ params }); // => object
+api.levels.getById({ params }); // => Promise<Object>
 ```
 Possible params:
 ```js
@@ -58,7 +58,7 @@ levelID // Number
 ## Tops
 To obtain the top type:
 ```js
-api.tops.get(type) // => array of user objects
+api.tops.get(type) // => Promise<Array>
 ```
 Possible top types:
 * top
