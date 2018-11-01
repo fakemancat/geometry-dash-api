@@ -49,6 +49,7 @@ api.users.getById({ params }); // => Promise<Object>
 |Param    |Type  |Description    |
 |---------|------|---------------|
 |accountID|Number|user account ID|
+#
 For information on user nick:
 ```js
 api.users.getByNick({ params }); // => Promise<Object>
