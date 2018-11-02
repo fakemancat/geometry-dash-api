@@ -1,6 +1,6 @@
 {
   "name": "geometry-dash-api",
-  "version": "1.0.1-alpha",
+  "version": "1.0.0-alpha",
   "description": "Module for working with Geometry Dash API",
   "main": "index.js",
   "scripts": {
