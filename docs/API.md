@@ -12,7 +12,7 @@ To start before using the API you need to log in:
     accountID: 71
   });
   console.log(user); // => Object
-})()
+})();
 ```
 or
 ```js
@@ -55,7 +55,7 @@ console.log(user); // => object
 For information on user nick:
 ```js
 const user = await api.users.getByNick(nick);
-console.log(user); // => object
+console.log(user); // => Object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -85,7 +85,7 @@ await api.friends.addRequest({ params }); // => If successful: true
 For information of level on ID:
 ```js
 const level = await api.levels.getById({ params });
-console.log(level); // => object
+console.log(level); // => Object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -95,7 +95,7 @@ console.log(level); // => object
 To obtain the top type:
 ```js
 const users = await api.tops.get({ params });
-console.log(users); // => array of objects
+console.log(users); // => Array of objects
 ```
 |Param|Type|Description|
 |-|-|-|
