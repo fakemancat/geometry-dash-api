@@ -6,7 +6,7 @@
 * Getting any number of users in the top (up to 100 of course)
 * Convenient use :D
 ## In the near future
-* Online handler of new messages, friend requests and new estimated levels
+* Online handler of new messages, friend requests and new rated levels
 # Documentations
  **All documentation was written through a translator**
 * [Start](https://github.com/fakemancat/geometry-dash-api/blob/master/docs/start.md)
