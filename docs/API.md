@@ -127,6 +127,15 @@ console.log(level); // => Object
 |-|-|-|
 |levelID|Number|Level ID|
 |levelString|Boolean|Return level String or not|
+#
+For getting weekly or daily levels:
+```js
+const daily = await api.levels.getDaily();
+const weekly = await api.levels.getWeekly();
+
+console.log(daily); // => Object
+console.log(weekly); // => Object
+```
 ### Tops
 To obtain the top type:
 ```js
