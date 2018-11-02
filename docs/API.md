@@ -11,16 +11,17 @@ To start before using the API you need to log in:
   const user = await api.users.getById({
     accountID: 71
   });
-  console.log(user); // => object
+  console.log(user); // => Object
 })()
 ```
 or
 ```js
-api.login().then(async() => {
+api.login().then(async(_user) => {
   const user = await api.users.getById({
     accountID: 71
   });
-  console.log(user); // => object
+  console.log(user); // => Object
+  console.log(_user); // => Object { accountID: Number, userID: Number }
 });
 ```
 Any asynchronous function is required.</br>
