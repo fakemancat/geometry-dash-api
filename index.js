@@ -22,13 +22,11 @@ class GeometryDash {
         if (!options.password) {
             error('Option "password" is required');
         }
-        options.password = options.password;
 
         // Nickname
         if (!options.userName) {
             error('Option "userName" is required');
         }
-        //
 
         // GJP
         options.gjp = xor.encodeGJP(options.password);

@@ -175,17 +175,21 @@ const Friends = function (options) {
 
 const Levels = function (options) {
     return {
-        getById: async function (levelID) {
-            if (!levelID) {
+        getById: async function (params) {
+            if (!params.levelID) {
                 error('Parameter "levelID" is required');
             }
+            if (isNaN(params.levelID)) {
+                error('Parameter "levelID" must be a number');
+            }
+
             let level = await request(`${options.server}/downloadGJLevel22.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
                     binaryVersion: '35',
                     gdw: '0',
-                    levelID: levelID,
+                    levelID: params.levelID,
                     inc: '0',
                     extras: '0',
                     secret: 'Wmfd2893gb7'
@@ -204,6 +208,7 @@ const Levels = function (options) {
                 20: 'Normal',
                 30: 'Hard',
                 40: 'Harder',
+                50: (starAuto == '1' ? 'Auto' : starDemon == '1' ? 'Demon' : 'Insane')
             }[result[9]] || (starAuto == '1' ? 'Auto' : starDemon == '1' ? 'Demon' : 'Insane');
 
             const length = [
@@ -218,10 +223,10 @@ const Levels = function (options) {
             password = String(password);
 
             if (password.length > 1) {
-                password = Number(password.join('')) - 1000000;
+                password = Number(password) - 1000000;
             }
             else {
-                password = Number(password.join(''));
+                password = Number(password);
             }
 
             let answer = {
@@ -248,11 +253,17 @@ const Levels = function (options) {
                 password
             };
 
-            if (options.levelString) {
+            if (params.levelString) {
                 answer['levelString'] = result[4];
             }
 
             return answer;
+        },
+        getDaily: function () { // AHahhAHHAHah
+            return this.getById(-1);
+        },
+        getWeekly: function () {
+            return this.getById(-2);
         }
     };
 };
