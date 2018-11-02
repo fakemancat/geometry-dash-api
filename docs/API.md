@@ -46,7 +46,7 @@ For each asynchronous function, you need to login:
 ### Why you need a login
 if you don't sign in, you won't have an accountID defined. Which is why you won't be able to use most of the methods
 ```js
-const GeometryDash = require('./geometry-dash-api-master');
+const GeometryDash = require('geometry-dash-api');
 
 const Server = new GeometryDash({
   server: 'http://fakeman-cat.tk:1234/server',
