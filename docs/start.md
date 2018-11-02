@@ -1,7 +1,7 @@
 # Getting started
 In order to use the module you need to connect it to your code:
 ```js
-const GeometryDash = require('geometry-dash-api');
+const GeometryDash = require('./geometry-dash-api-master');
 
 const Server = new GeometryDash({
   server: 'http://fakeman-cat.tk:1234/server', // My server :D
