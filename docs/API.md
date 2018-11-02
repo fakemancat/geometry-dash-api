@@ -11,6 +11,7 @@ To start before using the API you need to log in:
   const user = await api.users.getById({
     accountID: 71
   });
+  
   console.log(user); // => Object
 })();
 ```
@@ -20,6 +21,7 @@ Server.login().then(async(_user) => {
   const user = await api.users.getById({
     accountID: 71
   });
+  
   console.log(user); // => Object
   console.log(_user); // => Object { accountID: Number, userID: Number }
 });
@@ -47,12 +49,13 @@ if you don't sign in, you won't have an accountID defined. Which is why you won'
 const GeometryDash = require('./geometry-dash-api-master');
 
 const Server = new GeometryDash({
-    server: 'http://fakeman-cat.tk:1234/server',
-    userName: 'Fakeman Cat',
-    password: 'password'
+  server: 'http://fakeman-cat.tk:1234/server',
+  userName: 'Fakeman Cat',
+  password: 'password'
 });
 
 console.log(Server.options); // => Object
+
 /*  {
  *    server: 'http://fakeman-cat.tk:1234/server',
  *    userName: 'Fakeman Cat',
@@ -62,7 +65,8 @@ console.log(Server.options); // => Object
  */
 
 Server.login().then(() => {
- console.log(Server.options); // => Object
+  console.log(Server.options); // => Object
+  
  /*  {
   *    server: 'http://fakeman-cat.tk:1234/server',
   *    userName: 'Fakeman Cat',
@@ -78,7 +82,7 @@ Server.login().then(() => {
 For information on user ID:
 ```js
 const user = await api.users.getById(ID);
-console.log(user); // => object
+console.log(user); // => Object
 ```
 |Param |Type|Description|
 |-|-|-|
