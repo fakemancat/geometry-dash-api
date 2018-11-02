@@ -70,6 +70,7 @@ console.log(users); // => Object
 |-|-|-|
 |query|String|Search query|
 |page|Number|The page you want to get|
+
 The "Page" parameter can be omitted, then it will be 0
 ### Friends
 To send requests to your friends in someone's ID:
