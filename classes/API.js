@@ -1,5 +1,6 @@
 const { error } = require('../functions/errors');
 const splitRes = require('../functions/splitResult');
+const getPages = require('../functions/getPages');
 const request = require('../functions/request');
 
 const XOR = require('./XOR');
@@ -28,7 +29,7 @@ const Users = function (options) {
                 }
             });
             if (account == '-1') {
-                error('User is not found');
+                return null;
             }
 
             const result = splitRes(account);
@@ -68,12 +69,65 @@ const Users = function (options) {
                 }
             });
             if (searched == '-1') {
-                error('User is not found');
+                return null;
             }
 
             const accountID = searched.split(':')[21];
 
             return this.getById(accountID);
+        },
+        find: async function (params = {}) {
+            if (!params.query) {
+                error('Parameter "key" is required');
+            }
+            if (!params.page) {
+                params.page = 0;
+            }
+            if (isNaN(params.page)) {
+                error('Parameter "page" must be a number');
+            }
+
+            const searched = await request(`${this.options.server}/getGJUsers20.php`, {
+                method: 'POST',
+                form: {
+                    gameVersion: '21',
+                    binaryVersion: '35',
+                    gdw: '0',
+                    str: String(params.query),
+                    page: Number(params.page),
+                    total: 0,
+                    secret: 'Wmfd2893gb7'
+                }
+            });
+
+            if (searched == '-1') {
+                return null;
+            }
+
+            const users = searched.split('#')[0].split('|');
+            const count = searched.split('#')[1].split(':')[0];
+
+            const result = {
+                page: params.page,
+                pages: users.length < 10 ? 1 : getPages(count),
+                users: []
+            };
+
+            for (let user of users) {
+                if (user.length < 1) {
+                    continue;
+                }
+
+                user = splitRes(user);
+
+                result.users.push({
+                    nick: user[1],
+                    userID: +user[2],
+                    accountID: +user[16],
+                });
+            }
+
+            return result;
         }
     };
 };
@@ -140,7 +194,7 @@ const Levels = function (options) {
                 }
             });
             if (level == '-1') {
-                error('Level is not found');
+                return null;
             }
 
             const result = splitRes(level);
@@ -235,13 +289,17 @@ const Tops = function (options) {
             let top = [];
 
             for (let user of users) {
+                if (user.length < 1) {
+                    continue;
+                }
+
                 user = splitRes(user);
 
                 top.push({
                     top: +user[6],
                     nick: user[1],
-                    userID: user[2],
-                    accountID: user[16],
+                    userID: +user[2],
+                    accountID: +user[16],
                 });
             }
 
