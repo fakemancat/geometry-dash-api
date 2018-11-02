@@ -8,9 +8,7 @@ To start before using the API you need to log in:
 (async() => {
   await Server.login();
   
-  const user = await api.users.getById({
-    accountID: 71
-  });
+  const user = await api.users.getById(71);
   
   console.log(user); // => Object
 })();
@@ -18,9 +16,7 @@ To start before using the API you need to log in:
 or
 ```js
 Server.login().then(async(_user) => {
-  const user = await api.users.getById({
-    accountID: 71
-  });
+  const user = await api.users.getById(71);
   
   console.log(user); // => Object
   console.log(_user); // => Object { accountID: Number, userID: Number }
