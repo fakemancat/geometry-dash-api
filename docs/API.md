@@ -60,6 +60,17 @@ console.log(user); // => object
 |Param|Type|Description|
 |-|-|-|
 |nick|String|The nickname of the user|
+#
+To find players:
+```js
+const users = await api.users.find({ params });
+console.log(users); // => Object
+```
+|Param|Type|Description|
+|-|-|-|
+|query|String|Search query|
+|page|Number|The page you want to get|
+The "Page" parameter can be omitted, then it will be 0
 ### Friends
 To send requests to your friends in someone's ID:
 ```js
