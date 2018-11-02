@@ -8,22 +8,21 @@ const xor = new XOR();
 
 const Users = function (options) {
     return {
-        options,
         getById: async function (ID) {
-            if (!this.options.accountID) {
+            if (!options.accountID) {
                 error('You need to log in to your account');
             }
             if (!ID) {
                 error('Parameter "ID" is required');
             }
-            let account = await request(`${this.options.server}/getGJUserInfo20.php`, {
+            let account = await request(`${options.server}/getGJUserInfo20.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: "21",
                     binaryVersion: "35",
                     gdw: "0",
-                    accountID: this.options.accountID,
-                    gjp: this.options.gjp,
+                    accountID: options.accountID,
+                    gjp: options.gjp,
                     targetAccountID: ID,
                     secret: "Wmfd2893gb7"
                 }
@@ -56,7 +55,7 @@ const Users = function (options) {
             if (!NICK) {
                 error('Parameter "nick" is required');
             }
-            const searched = await request(`${this.options.server}/getGJUsers20.php`, {
+            const searched = await request(`${options.server}/getGJUsers20.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
@@ -87,7 +86,7 @@ const Users = function (options) {
                 error('Parameter "page" must be a number');
             }
 
-            const searched = await request(`${this.options.server}/getGJUsers20.php`, {
+            const searched = await request(`${options.server}/getGJUsers20.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
@@ -95,7 +94,7 @@ const Users = function (options) {
                     gdw: '0',
                     str: String(params.query),
                     page: Number(params.page),
-                    total: 0,
+                    total: '0',
                     secret: 'Wmfd2893gb7'
                 }
             });
@@ -104,8 +103,9 @@ const Users = function (options) {
                 return null;
             }
 
-            const users = searched.split('#')[0].split('|');
-            const count = searched.split('#')[1].split(':')[0];
+            const data = searched.split('#');
+            const users = data[0].split('|');
+            const count = data[1].split(':')[0];
 
             const result = {
                 page: params.page,
@@ -134,9 +134,8 @@ const Users = function (options) {
 
 const Friends = function (options) {
     return {
-        options,
         addRequest: async function (params = {}) {
-            if (!this.options.accountID) {
+            if (!options.accountID) {
                 error('You need to log in to your account');
             }
             if (!params.toAccountID) {
@@ -147,14 +146,14 @@ const Friends = function (options) {
             }
 
             try {
-                const result = await request(`${this.options.server}/uploadFriendRequest20.php`, {
+                const result = await request(`${options.server}/uploadFriendRequest20.php`, {
                     method: 'POST',
                     form: {
                         gameVersion: '21',
                         binaryVersion: '35',
                         gdw: '0',
-                        accountID: this.options.accountID,
-                        gjp: this.options.gjp,
+                        accountID: options.accountID,
+                        gjp: options.gjp,
                         toAccountID: params.toAccountID,
                         comment: xor.b64to(params.message),
                         secret: 'Wmfd2893gb7'
@@ -176,12 +175,11 @@ const Friends = function (options) {
 
 const Levels = function (options) {
     return {
-        options,
         getById: async function (levelID) {
             if (!levelID) {
                 error('Parameter "levelID" is required');
             }
-            let level = await request(`${this.options.server}/downloadGJLevel22.php`, {
+            let level = await request(`${options.server}/downloadGJLevel22.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
@@ -261,19 +259,18 @@ const Levels = function (options) {
 
 const Tops = function (options) {
     return {
-        options,
         get: async function (params = {}) {
             if (!params.type) {
                 error('Parameter "type" is required');
             }
-            const result = await request(`${this.options.server}/getGJScores20.php`, {
+            const result = await request(`${options.server}/getGJScores20.php`, {
                 method: 'POST',
                 form: {
                     gameVersion: '21',
                     binaryVersion: '35',
                     gdw: '0',
-                    accountID: this.options.accountID,
-                    gjp: this.options.gjp,
+                    accountID: options.accountID,
+                    gjp: options.gjp,
                     type: params.type,
                     count: 100,
                     secret: 'Wmfd2893gb7'
@@ -311,37 +308,9 @@ const Tops = function (options) {
 module.exports = class API {
     // Options
     constructor(options = {}) {
-        this.options = options;
-
-        this.tops = Tops(this.options);
-        this.users = Users(this.options);
-        this.levels = Levels(this.options);
-        this.friends = Friends(this.options);
-    }
-
-    // Logon
-    async login() {
-        const result = await request(`${this.options.server}/accounts/loginGJAccount.php`, {
-            method: 'POST',
-            form: {
-                userName: this.options.userName,
-                password: this.options.password,
-                udid: 'S15212605216721190533746828475040751000',
-                sID: '76561202036250159',
-                secret: 'Wmfv3899gc9'
-            }
-        });
-
-        if (result == '-1') {
-            error('Login failed');
-        }
-
-        const user = {
-            accountID: +result.split(',')[0],
-            userID: +result.split(',')[1]
-        };
-
-        this.options.accountID = user.accountID;
-        return user;
+        this.tops = Tops(options);
+        this.users = Users(options);
+        this.levels = Levels(options);
+        this.friends = Friends(options);
     }
 };

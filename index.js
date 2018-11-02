@@ -5,43 +5,61 @@ const XOR = require('./classes/XOR');
 const API = require('./classes/API');
 
 // Functions
-const { error } = './functions/error';
-
+const { error } = require('./functions/errors');
+const request = require('./functions/request');
 const xor = new XOR();
 
 class GeometryDash {
     constructor(options = {}) {
         // Server
-        let server = (
-                options.server || 'http://www.boomlings.com/database'
-            )
-            .replace(/(\/)$/, '');
-
+        let server = (options.server || 'http://www.boomlings.com/database').replace(/(\/)$/, '');
         if (!/^(https?)/.test(server)) {
             server = `http://${server}`;
         }
         options.server = server;
-        //
 
         // Password
         if (!options.password) {
             error('Option "password" is required');
         }
         options.password = options.password;
-        //
 
         // Nickname
         if (!options.userName) {
             error('Option "userName" is required');
         }
-        options.userName = options.userName;
         //
 
         // GJP
         options.gjp = xor.encodeGJP(options.password);
-        //
 
-        this.api = new API(options);
+        this.options = options;
+        this.api = new API(this.options);
+    }
+    // Logon
+    async login() {
+        const result = await request(`${this.options.server}/accounts/loginGJAccount.php`, {
+            method: 'POST',
+            form: {
+                userName: this.options.userName,
+                password: this.options.password,
+                udid: 'S15212605216721190533746828475040751000',
+                sID: '76561202036250159',
+                secret: 'Wmfv3899gc9'
+            }
+        });
+
+        if (result == '-1') {
+            error('Login failed');
+        }
+
+        const user = {
+            accountID: +result.split(',')[0],
+            userID: +result.split(',')[1]
+        };
+
+        this.options.accountID = user.accountID;
+        return user;
     }
 }
 
