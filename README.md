@@ -1,5 +1,11 @@
-# geometry-dash-api
-#### NPM module for working with Geometry Dash API
+# NPM module for working with Geometry Dash API
+
+[![npm package](https://nodei.co/npm/geometry-dash-api.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/geometry-dash-api/)
+<p>
+<a href="https://www.npmjs.com/package/geometry-dash-api"><img src="https://img.shields.io/npm/v/geometry-dash-api.svg?style=flat-square" alt="Version"></a>
+<a href="https://www.npmjs.com/package/geometry-dash-api"><img src="https://img.shields.io/npm/dt/geometry-dash-api.svg?style=flat-square" alt="Downloads"></a>
+</p>
+
 ## Module features
 * Full API work with any GD server directly
 * Sign in and manage your GD account

@@ -8,9 +8,7 @@ To start before using the API you need to log in:
 (async() => {
   await Server.login();
   
-  const user = await api.users.getById({
-    accountID: 71
-  });
+  const user = await api.users.getById(71);
   
   console.log(user); // => Object
 })();
@@ -18,9 +16,7 @@ To start before using the API you need to log in:
 or
 ```js
 Server.login().then(async(_user) => {
-  const user = await api.users.getById({
-    accountID: 71
-  });
+  const user = await api.users.getById(71);
   
   console.log(user); // => Object
   console.log(_user); // => Object { accountID: Number, userID: Number }
@@ -78,6 +74,52 @@ Server.login().then(() => {
 });
 ```
 ## API methods
+### Account
+To add a post to your profile:
+```js
+const result = await api.account.addPost(message);
+console.log(result); // => null OR commentID
+```
+|Param |Type|Description|
+|-|-|-|
+|message|String|Text to send|
+#
+To remove a post from your profile:
+```js
+const result = await api.account.deletePost(commentID);
+console.log(result); // => null OR true
+```
+|Param |Type|Description|
+|-|-|-|
+|commentID|String|Text to send|
+#
+To update your profile settings:
+```js
+const result = await api.account.updateSettings({ params });
+console.log(result); // => null OR true
+```
+|Param |Type|Description|
+|-|-|-|
+|messagesFrom|String|Allow message from|
+|friendReqsFrom|String|Allow friends requests from|
+|commentHistoryTo|String|Show comment history to|
+|youtube|String|YouTube link|
+|twitter|String|Twitter link|
+|twitch|String|Twitch link|
+
+Possible messagesFrom types:
+* all
+* friends
+* none
+
+Possible friendReqsFrom types:
+* all
+* none
+
+Possible commentHistoryTo types:
+* all
+* friends
+* me
 ### Users
 For information on user ID:
 ```js
