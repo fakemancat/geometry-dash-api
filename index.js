@@ -2,7 +2,9 @@
 
 // Classes
 const XOR = require('./classes/XOR');
-const API = require('./classes/API');
+
+// Functional
+const API = require('./API/index');
 
 // Functions
 const { error } = require('./functions/errors');
