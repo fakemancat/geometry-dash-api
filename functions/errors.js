@@ -1,16 +1,12 @@
-const error = (text = "Unknown error") => {
+const error = (text = "Unknown error", code = 1) => {
     const error = new Error(text);
     
     throw error;
 };
 
-const syntaxError = (text = "Unknown error") => {
-    const error = new SyntaxError(text);
-    
-    throw error;
-};
+const paramError = Parameter => error(`Parameter ${Parameter} is required`);
 
 module.exports = {
     error,
-    syntaxError
+    paramError
 };

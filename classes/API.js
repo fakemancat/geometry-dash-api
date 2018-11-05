@@ -1,10 +1,123 @@
-const { error } = require('../functions/errors');
+const { error, paramError } = require('../functions/errors');
 const splitRes = require('../functions/splitResult');
 const getPages = require('../functions/getPages');
 const request = require('../functions/request');
 
 const XOR = require('./XOR');
 const xor = new XOR();
+
+const Account = function (options) {
+    return {
+        addPost: async function (text = 'Text is required') {
+            if (!options.accountID) {
+                error('You need to log in to your account');
+            }
+
+            const result = await request(`${options.server}/uploadGJAccComment20.php`, {
+                method: 'POST',
+                form: {
+                    gameVersion: '21',
+                    binaryVersion: '35',
+                    gdw: '0',
+                    accountID: options.accountID,
+                    gjp: options.gjp,
+                    userName: options.userName,
+                    comment: Buffer.from(text).toString('base64'),
+                    secret: 'Wmfd2893gb7',
+                    cType: 0
+                }
+            });
+
+            if (result == '-1') {
+                return null;
+            }
+
+            return +result;
+        },
+        deletePost: async function (commentID) {
+            if (!commentID) {
+                paramError('commentID');
+            }
+            const result = await request(`${options.server}/deleteGJAccComment20.php`, {
+                method: 'POST',
+                form: {
+                    gameVersion: '21',
+                    binaryVersion: '35',
+                    gdw: '0',
+                    accountID: options.accountID,
+                    gjp: options.gjp,
+                    commentID,
+                    secret: 'Wmfd2893gb7',
+                    cType: '1'
+                }
+            });
+
+            if (result == '-1') {
+                return null;
+            }
+
+            return true;
+        },
+        updateSettings: async function (params = {}) {
+            if (!params.messagesFrom) {
+                params.msgsFrom = 'all';
+            }
+            if (!params.friendReqsFrom) {
+                params.friendReqsFrom = 'all';
+            }
+            if (!params.commentHistoryTo) {
+                params.commentHistoryTo = 'all';
+            }
+            if (!params.youtube) {
+                params.youtube = '';
+            }
+            if (!params.twitter) {
+                params.twitter = '';
+            }
+            if (!params.twitch) {
+                params.twitch = '';
+            }
+
+            const mS = {
+                'all': 0,
+                'friends': 1,
+                'none': 2
+            }[params.messagesFrom] || 0;
+
+            const frS = {
+                'all': 0,
+                'none': 1
+            }[params.friendReqsFrom] || 0;
+
+            const cS = {
+                'all': 0,
+                'friends': 1,
+                'me': 2
+            }[params.commentHistoryTo] || 0;
+
+            const result = await request(`${options.server}/updateGJAccSettings20.php`, {
+                method: 'POST',
+                form: {
+                    accountID: options.accountID,
+                    gjp: options.gjp,
+                    mS,
+                    frS,
+                    cS,
+                    yt: params.youtube,
+                    twitter: params.twitter,
+                    twitch: params.twitch,
+                    secret: 'Wmfv3899gc9'
+                }
+            });
+
+            if (result == '-1') {
+                return null;
+            }
+
+            return true;
+        }
+    };
+};
 
 const Users = function (options) {
     return {
@@ -13,18 +126,18 @@ const Users = function (options) {
                 error('You need to log in to your account');
             }
             if (!ID) {
-                error('Parameter "ID" is required');
+                paramError('ID');
             }
             let account = await request(`${options.server}/getGJUserInfo20.php`, {
                 method: 'POST',
                 form: {
-                    gameVersion: "21",
-                    binaryVersion: "35",
-                    gdw: "0",
+                    gameVersion: '21',
+                    binaryVersion: '35',
+                    gdw: '0',
                     accountID: options.accountID,
                     gjp: options.gjp,
                     targetAccountID: ID,
-                    secret: "Wmfd2893gb7"
+                    secret: 'Wmfd2893gb7'
                 }
             });
             if (account == '-1') {
@@ -51,9 +164,9 @@ const Users = function (options) {
                 rightsString: result[49] == '2' ? 'Elder-moderator' : result[49] == '1' ? 'Moderator' : 'User'
             };
         },
-        getByNick: async function (NICK) {
-            if (!NICK) {
-                error('Parameter "nick" is required');
+        getByNick: async function (nick) {
+            if (!nick) {
+                paramError('nick');
             }
             const searched = await request(`${options.server}/getGJUsers20.php`, {
                 method: 'POST',
@@ -61,7 +174,7 @@ const Users = function (options) {
                     gameVersion: '21',
                     binaryVersion: '35',
                     gdw: '0',
-                    str: NICK,
+                    str: nick,
                     total: '0',
                     page: '0',
                     secret: 'Wmfd2893gb7'
@@ -77,7 +190,7 @@ const Users = function (options) {
         },
         find: async function (params = {}) {
             if (!params.query) {
-                error('Parameter "key" is required');
+                paramError('query');
             }
             if (!params.page) {
                 params.page = 0;
@@ -139,10 +252,10 @@ const Friends = function (options) {
                 error('You need to log in to your account');
             }
             if (!params.toAccountID) {
-                error('Parameter "toAccountID" is required');
+                paramError('toAccountID');
             }
             if (!params.message) {
-                error('Parameter "message" is required');
+                paramError('message');
             }
 
             try {
@@ -177,7 +290,7 @@ const Levels = function (options) {
     return {
         getById: async function (params) {
             if (!params.levelID) {
-                error('Parameter "levelID" is required');
+                paramError('levelID');
             }
             if (isNaN(params.levelID)) {
                 error('Parameter "levelID" must be a number');
@@ -234,7 +347,7 @@ const Levels = function (options) {
                 name: result[2],
                 desc: result[3],
                 version: +result[5],
-                creatorID: +result[6],
+                creatorUserID: +result[6],
                 diff,
                 downloads: +result[10],
                 likes: +result[14],
@@ -271,8 +384,11 @@ const Levels = function (options) {
 const Tops = function (options) {
     return {
         get: async function (params = {}) {
+            if (!options.accountID) {
+                error('You need to log in to your account');
+            }
             if (!params.type) {
-                error('Parameter "type" is required');
+                paramError('type');
             }
             const result = await request(`${options.server}/getGJScores20.php`, {
                 method: 'POST',
@@ -322,6 +438,7 @@ module.exports = class API {
         this.tops = Tops(options);
         this.users = Users(options);
         this.levels = Levels(options);
+        this.account = Account(options);
         this.friends = Friends(options);
     }
 };
