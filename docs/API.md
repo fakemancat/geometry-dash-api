@@ -124,7 +124,7 @@ Possible commentHistoryTo types:
 For information on user ID:
 ```js
 const user = await api.users.getById(ID);
-console.log(user); // => Object
+console.log(user); // => null OR Object
 ```
 |Param |Type|Description|
 |-|-|-|
@@ -133,7 +133,7 @@ console.log(user); // => Object
 For information on user nick:
 ```js
 const user = await api.users.getByNick(nick);
-console.log(user); // => Object
+console.log(user); // => null OR Object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -142,7 +142,7 @@ console.log(user); // => Object
 To find players:
 ```js
 const users = await api.users.find({ params });
-console.log(users); // => Object
+console.log(users); // => null OR Object
 ```
 |Param|Type|Description|
 |-|-|-|
@@ -153,17 +153,69 @@ The "Page" parameter can be omitted, then it will be 0
 ### Friends
 To send requests to your friends in someone's ID:
 ```js
-await api.friends.addRequest({ params }); // => If successful: true
+await api.friends.sendRequest({ params }); // => If successful: true
 ```
 |Param|Type|Description|
 |-|-|-|
 |toAccountID|Number|Player's ID|
 |message|String|Message when adding|
+#
+To delete a submitted friend request:
+```js
+const result = await api.friends.deleteSentRequest(targetAccountID);
+console.log(result); // => null OR true
+```
+|Param|Type|Description|
+|-|-|-|
+|targetAccountID|Number|accountID of the person to whom the application was sent|
+#
+To delete the received friend request:
+```js
+const result = await api.friends.deleteRequest(targetAccountID);
+console.log(result); // => null OR true
+```
+|Param|Type|Description|
+|-|-|-|
+|targetAccountID|Number|accountID of the person from whom the application came|
+#
+To receive applications came to friends:
+```js
+const result = api.friends.getRequests(page);
+console.log(result); // => null OR Object
+```
+|Param|Type|Description|
+|-|-|-|
+|page|Number|The page you want to get|
+
+The "Page" parameter can be omitted, then it will be 0
+#
+To receive applications sent to friends:
+```js
+const result = api.friends.getSentRequests(page);
+console.log(result); // => null OR Object
+```
+|Param|Type|Description|
+|-|-|-|
+|page|Number|The page you want to get|
+
+The "Page" parameter can be omitted, then it will be 0
+#
+To accept the application as a friend:
+```js
+const result = await api.friends.acceptRequest({ params });
+console.log(result); // => null OR true
+```
+|Param|Type|Description|
+|-|-|-|
+|targetAccountID|Number|accountID of the person who sent the application|
+|requestID|Number|ID of the application to friends|
+
+These parameters can be obtained from the methods: ```getRequests``` and ```getSentRequests``` methods
 ### Levels
 For information of level on ID:
 ```js
 const level = await api.levels.getById({ params });
-console.log(level); // => Object
+console.log(level); // => null OR Object
 ```
 |Param|Type|Description|
 |-|-|-|
