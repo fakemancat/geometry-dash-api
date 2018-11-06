@@ -7,7 +7,7 @@ module.exports = class Users {
     constructor(options = {}) {
         this.options = options;
     }
-    
+
     async getById(ID) {
         if (!this.options.accountID) {
             error('You need to log in to your account');

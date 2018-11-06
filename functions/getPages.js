@@ -1,5 +1,5 @@
-module.exports = (num) => {
-    let pages = num / 10;
+module.exports = (num, maxElements = 10) => {
+    let pages = num / maxElements;
 
     if ((pages % 1) == 0) {
         pages = Math.floor(pages);
