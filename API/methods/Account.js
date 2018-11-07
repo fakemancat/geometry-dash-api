@@ -118,5 +118,3 @@ module.exports = class Account {
         return true;
     }
 };
-
-/* TEST GIT */

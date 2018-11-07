@@ -9,7 +9,7 @@ module.exports = class Levels {
     constructor(options = {}) {
         this.options = options;
     }
-    
+
     async getById(params) {
         if (!params.levelID) {
             paramError('levelID');
@@ -94,10 +94,10 @@ module.exports = class Levels {
 
         return answer;
     }
-    getDaily() { // AHahhAHHAHah
-        return this.getById(-1);
+    get getDaily() { // AHahhAHHAHah
+        return this.getById({ levelID: -1 });
     }
-    getWeekly() {
-        return this.getById(-2);
+    get getWeekly() {
+        return this.getById({ levelID: -2});
     }
 };
