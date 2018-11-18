@@ -9,6 +9,14 @@ const Server = new GeometryDash({
   password: 'Password'
 });
 ```
+
+Also, just in case there is a method setOptions based on ```Object.assign```:
+```js
+Server.setOptions({
+  password: 'asdasd'
+});
+```
+
 The module is designed for all game servers, so you can specify the server parameter.</br>
 This parameter can be omitted, then it will be the default: http://www.boomlings.com/database
 #
