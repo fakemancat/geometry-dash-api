@@ -14,21 +14,19 @@ const xor = new XOR();
 class GeometryDash {
     constructor(options = {}) {
         // Server
-        let server = (options.server || 'http://www.boomlings.com/database').replace(/(\/)$/, '');
-        if (!/^(https?)/.test(server)) {
-            server = `http://${server}`;
-        }
+        let server = '';
+
+        server = (options.server || 'http://www.boomlings.com/database');
+        server = server.replace(/([\/]+)$/, '');
+        server = (!/^(https?)/.test(server) ? `http://${server}` : server);
+
         options.server = server;
 
         // Password
-        if (!options.password) {
-            error('Option "password" is required');
-        }
+        if (!options.password) error('Option "password" is required');
 
         // Nickname
-        if (!options.userName) {
-            error('Option "userName" is required');
-        }
+        if (!options.userName) error('Option "userName" is required');
 
         // GJP
         options.gjp = xor.encodeGJP(options.password);
@@ -36,8 +34,15 @@ class GeometryDash {
         this.options = options;
         this.api = new API(this.options);
     }
+    setOptions(options = {}) {
+        Object.assign(this.options, options);
+
+        return this;
+    }
     // Logon
     async login() {
+        if (!this.options.noLogger) console.time('Login to your account');
+
         const result = await request(`${this.options.server}/accounts/loginGJAccount.php`, {
             method: 'POST',
             form: {
@@ -49,14 +54,17 @@ class GeometryDash {
             }
         });
 
-        if (result == '-1') {
+        if (result <= 0) {
             error('Login failed');
         }
 
+        // Login successful
         const user = {
             accountID: +result.split(',')[0],
             userID: +result.split(',')[1]
         };
+
+        if (!this.options.noLogger) console.timeEnd('Login to your account');
 
         this.options.accountID = user.accountID;
         return user;
