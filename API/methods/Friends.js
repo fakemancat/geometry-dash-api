@@ -1,5 +1,4 @@
 const request = require('../../functions/request');
-const getPages = require('../../functions/getPages');
 const splitRes = require('../../functions/splitResult');
 const { error, paramError } = require('../../functions/errors');
 
@@ -124,11 +123,12 @@ module.exports = class Friends {
 
         const data = got.split('#');
         const users = data[0].split('|');
-        const count = data[1].split(':')[0];
+        const count = +data[1].split(':')[0];
 
         const result = {
             page,
-            pages: users.length < 20 ? 1 : getPages(count, 20),
+            pages: users.length < 20 ? 1 : Math.ceil(count / 20),
+            count,
             users: []
         };
 
@@ -177,11 +177,12 @@ module.exports = class Friends {
 
         const data = got.split('#');
         const users = data[0].split('|');
-        const count = data[1].split(':')[0];
+        const count = +data[1].split(':')[0];
 
         const result = {
             page,
-            pages: users.length < 20 ? 1 : getPages(count, 20),
+            pages: users.length < 20 ? 1 : Math.ceil(count / 20),
+            count,
             users: []
         };
 
@@ -227,11 +228,11 @@ module.exports = class Friends {
                 secret: 'Wmfd2893gb7'
             }
         });
-        
+
         if (result == '-1' || result == '-2') {
             return null;
         }
-        
+
         return true;
     }
 };

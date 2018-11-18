@@ -1,5 +1,4 @@
 const request = require('../../functions/request');
-const getPages = require('../../functions/getPages');
 const splitRes = require('../../functions/splitResult');
 const { error, paramError } = require('../../functions/errors');
 
@@ -105,11 +104,12 @@ module.exports = class Users {
 
         const data = searched.split('#');
         const users = data[0].split('|');
-        const count = data[1].split(':')[0];
+        const count = +data[1].split(':')[0];
 
         const result = {
             page: params.page,
-            pages: users.length < 10 ? 1 : getPages(count),
+            pages: users.length < 10 ? 1 : Math.ceil(count / 10),
+            count,
             users: []
         };
 
