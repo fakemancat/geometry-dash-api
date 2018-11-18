@@ -36,7 +36,9 @@ module.exports = class Levels {
 
         const result = splitRes(level);
 
-        const [starAuto, starDemon] = [result[25], result[17]];
+        const starAuto = result[25];
+        const starDemon = result[17];
+
         let diff = {
             0: 'NA',
             10: 'Easy',
@@ -47,12 +49,12 @@ module.exports = class Levels {
         }[result[9]] || (starAuto == '1' ? 'Auto' : starDemon == '1' ? 'Demon' : 'Insane');
 
         const length = [
-                'tiny',
-                'short',
-                'medium',
-                'long',
-                'XL'
-            ][result[15]];
+            'tiny',
+            'short',
+            'medium',
+            'long',
+            'XL'
+        ][result[15]];
 
         let password = +xor.cipher((Buffer.from(result[27], 'base64').toString()), 26364);
         password = String(password);
@@ -94,10 +96,10 @@ module.exports = class Levels {
 
         return answer;
     }
-    get getDaily() { // AHahhAHHAHah
+    getDaily() { // AHahhAHHAHah
         return this.getById({ levelID: -1 });
     }
-    get getWeekly() {
-        return this.getById({ levelID: -2});
+    getWeekly() {
+        return this.getById({ levelID: -2 });
     }
 };
