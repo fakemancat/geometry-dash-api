@@ -224,8 +224,8 @@ console.log(level); // => null OR Object
 #
 For getting weekly or daily levels:
 ```js
-const daily = await api.levels.getDaily; // Getter
-const weekly = await api.levels.getWeekly; // Getter
+const daily = await api.levels.getDaily();
+const weekly = await api.levels.getWeekly();
 
 console.log(daily); // => Object
 console.log(weekly); // => Object
