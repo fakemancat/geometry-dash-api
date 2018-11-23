@@ -14,13 +14,7 @@ module.exports = class XOR {
         return String.fromCodePoint(ascii);
     }
     text2ascii(input) {
-        input = String(input);
-        const size = input.length;
-        let res = [];
-        for (let i = 0; i < size; i++) {
-            res.push(input[i].charCodeAt());
-        }
-        return res;
+        return String(input).split('').map(letter => letter.charCodeAt());
     }
     cipher(data, key) {
         key = this.text2ascii(key);
@@ -34,13 +28,22 @@ module.exports = class XOR {
         }
         return cipher;
     }
-    encodeGJP(password) {
-        let gjpencode = this.cipher(password, 37526);
-        gjpencode = Buffer.from(gjpencode).toString('base64');
-        gjpencode = gjpencode
+    encrypt(password, key = 37526) {
+        let encode = this.cipher(password, key);
+        encode = Buffer.from(encode).toString('base64');
+        encode = encode
             .replace(/\//g, '_')
             .replace(/\+/g, '-');
 
-        return gjpencode;
+        return encode;
+    }
+    decrypt(gjp, key = 37526) {
+        let decode = gjp
+            .replace(/_/g, '/')
+            .replace(/-/g, '+');
+        decode = Buffer.from(decode, 'base64').toString();
+        decode = this.cipher(decode, key);
+
+        return decode;
     }
 };
