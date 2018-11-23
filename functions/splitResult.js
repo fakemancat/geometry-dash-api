@@ -1,5 +1,5 @@
-module.exports = (res) => {
-    res = res.split('#')[0].split(':');
+module.exports = (res, spliter = ':') => {
+    res = res.split('#')[0].split(spliter);
     let result = {};
 
     for (let i = 0; i < res.length; i += 2) {
