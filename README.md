@@ -17,4 +17,5 @@
  **All documentation was written through a translator**
 * [Start](https://github.com/fakemancat/geometry-dash-api/blob/master/docs/start.md)
   * [API](https://github.com/fakemancat/geometry-dash-api/blob/master/docs/API.md)
+  * [Updates](https://github.com/fakemancat/geometry-dash-api/blob/master/docs/Updates.md)
 #
