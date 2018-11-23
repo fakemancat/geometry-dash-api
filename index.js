@@ -5,6 +5,7 @@ const XOR = require('./classes/XOR');
 
 // Functional
 const API = require('./API/index');
+const Updates = require('./Updates/index');
 
 // Functions
 const { error } = require('./functions/errors');
@@ -29,10 +30,11 @@ class GDClient {
         if (!options.userName) error('Option "userName" is required');
 
         // GJP
-        options.gjp = xor.encodeGJP(options.password);
+        options.gjp = xor.encrypt(options.password);
 
         this.options = options;
         this.api = new API(this.options);
+        this.updates = new Updates(this.options, this.api);
     }
     setOptions(options = {}) {
         Object.assign(this.options, options);
@@ -66,7 +68,10 @@ class GDClient {
 
         if (!this.options.noLogger) console.timeEnd('Login to your account');
 
-        this.options.accountID = user.accountID;
+        this.setOptions({
+            accountID: user.accountID
+        });
+
         return user;
     }
 }
