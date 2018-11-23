@@ -230,6 +230,44 @@ const weekly = await api.levels.getWeekly();
 console.log(daily); // => Object
 console.log(weekly); // => Object
 ```
+#
+To find levels:
+```js
+const result = await api.levels.find({ params });
+console.log(result); // => null OR Object
+```
+|Param|Type|Description|Default|
+|-|-|-|-|
+|len|String|Level length, "all" - all levels|"all"|
+|star|Number|1 - levels with stars, 0 - all levels|0|
+|page|Number|The page you want to get|0|
+|epic|Number|1 - epic levels, 0 - all levels|0|
+|coins|Number|1 - levels with coins, 0 - all levels|0|
+|query|String|Search level name|require|
+|feature|Number|1 - feature levels, 0 - all levels|0|
+|original|Number|ID of the original level, 0 - all levels|0|
+|twoPlayer|Number|1 - Levels with two player mode, 0 - all levels|0|
+|difficulty|String|Level difficulty, "all" - all levels|"all"|
+
+Possible len types:
+* all
+* tiny
+* short
+* medium
+* long
+* XL
+
+Possible difficulty types:
+* all
+* NA
+* easy
+* normal
+* hard
+* harder
+* insane
+* demon
+* auto
+
 ### Tops
 To obtain the top type:
 ```js
