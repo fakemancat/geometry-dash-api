@@ -11,7 +11,7 @@ const { error } = require('./functions/errors');
 const request = require('./functions/request');
 const xor = new XOR();
 
-class GeometryDash {
+class GDClient {
     constructor(options = {}) {
         // Server
         let server = '';
@@ -71,4 +71,4 @@ class GeometryDash {
     }
 }
 
-module.exports = GeometryDash;
+module.exports = GDClient;

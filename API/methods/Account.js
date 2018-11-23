@@ -9,7 +9,7 @@ module.exports = class Account {
         this.options = options;
     }
     
-    async addPost(text = 'Text is required') {
+    async addPost(text = 'Text is not found') {
         if (!this.options.accountID) {
             error('You need to log in to your account');
         }

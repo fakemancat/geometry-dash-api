@@ -66,11 +66,12 @@ module.exports = class Users {
                 secret: 'Wmfd2893gb7'
             }
         });
+
         if (searched == '-1') {
             return null;
         }
 
-        const accountID = searched.split(':')[21];
+        const accountID = splitRes(searched)[16];
 
         return this.getById(accountID);
     }
