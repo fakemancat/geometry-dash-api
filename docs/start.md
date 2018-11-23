@@ -1,9 +1,9 @@
 # Getting started
 In order to use the module you need to connect it to your code:
 ```js
-const GeometryDash = require('geometry-dash-api');
+const GDClient = require('geometry-dash-api');
 
-const Server = new GeometryDash({
+const client = new GDClient({
   server: 'http://fakeman-cat.tk:1234/server', // My server :D
   userName: 'Fakeman Cat',
   password: 'Password'
@@ -12,8 +12,9 @@ const Server = new GeometryDash({
 
 Also, just in case there is a method setOptions based on ```Object.assign```:
 ```js
-Server.setOptions({
-  password: 'asdasd'
+client.setOptions({
+  password: 'asdasd',
+  accountID: 71
 });
 ```
 
