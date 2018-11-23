@@ -1,12 +1,12 @@
 # Using the server API
 Get API methods:
 ```js
-const { api } = Server;
+const { api } = client;
 ```
 To start before using the API you need to log in:
 ```js
 (async() => {
-  await Server.login();
+  await client.login();
   
   const user = await api.users.getById(71);
   
@@ -15,7 +15,7 @@ To start before using the API you need to log in:
 ```
 or
 ```js
-Server.login().then(async(_user) => {
+client.login().then(async(_user) => {
   const user = await api.users.getById(71);
   
   console.log(user); // => Object
@@ -26,13 +26,13 @@ Any asynchronous function is required.</br>
 For each asynchronous function, you need to login:
 ```js
 (async() => { // 1
-  await Server.login();
+  await client.login();
   
   /* Any action with the API */
 })();
 
 (async() => { // 2
-  await Server.login();
+  await client.login();
   
   /* Any action with the API */
 })();
@@ -42,15 +42,15 @@ For each asynchronous function, you need to login:
 ### Why you need a login
 if you don't sign in, you won't have an accountID defined. Which is why you won't be able to use most of the methods
 ```js
-const GeometryDash = require('geometry-dash-api');
+const GDClient = require('geometry-dash-api');
 
-const Server = new GeometryDash({
+const client = new GDClient({
   server: 'http://fakeman-cat.tk:1234/server',
   userName: 'Fakeman Cat',
   password: 'password'
 });
 
-console.log(Server.options); // => Object
+console.log(client.options); // => Object
 
 /*  {
  *    server: 'http://fakeman-cat.tk:1234/server',
@@ -60,8 +60,8 @@ console.log(Server.options); // => Object
  *  }
  */
 
-Server.login().then(() => {
-  console.log(Server.options); // => Object
+client.login().then(() => {
+  console.log(client.options); // => Object
   
  /*  {
   *    server: 'http://fakeman-cat.tk:1234/server',
