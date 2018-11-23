@@ -103,6 +103,7 @@ module.exports = class Friends {
         if (!this.options.accountID) {
             error('You need to log in to your account');
         }
+
         const got = await request(`${this.options.server}/getGJFriendRequests20.php`, {
             method: 'POST',
             form: {
@@ -146,7 +147,7 @@ module.exports = class Friends {
                 date: `${user[37]} ago`,
                 isNew: Boolean(user[41]),
                 requestID: +user[32],
-                message: xor.b64from(user[35]) || 'No Message'
+                message: xor.b64from(user[35]) || null
             });
         }
 
@@ -198,7 +199,8 @@ module.exports = class Friends {
                 userID: +user[2],
                 accountID: +user[16],
                 date: `${user[37]} ago`,
-                requestID: +user[32]
+                requestID: +user[32],
+                message: xor.b64from(user[35]) || null
             });
         }
 
