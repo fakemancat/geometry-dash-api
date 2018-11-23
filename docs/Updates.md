@@ -1,6 +1,6 @@
 # Using the server event handler:
 ```js
-client.updates.on(event, callback, invterval);
+client.updates.on(event, callback, interval);
 ```
 You need to sign in to your account before you can use the listener:
 ```js
