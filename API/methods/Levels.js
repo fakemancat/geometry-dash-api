@@ -36,6 +36,8 @@ module.exports = class Levels {
 
         const result = splitRes(level);
 
+        const desc = Buffer.from(result[3], "base64").toString("ascii");
+
         const starAuto = result[25];
         const starDemon = result[17];
 
@@ -69,7 +71,7 @@ module.exports = class Levels {
         let answer = {
             levelID: +result[1],
             name: result[2],
-            desc: result[3],
+            desc,
             version: +result[5],
             creatorUserID: +result[6],
             diff,
